@@ -19,7 +19,7 @@ const Island = ({ id, name, details, questions, isActive, isCompleted, onComplet
   };
 
   return (
-    <div className={`flex flex-col items-center ${isActive ? 'opacity-100' : 'opacity-50'}`}>
+    <div className={`flex flex-col items-center ${isActive ? 'opacity-100' : 'opacity-50' } `}>
       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
         isCompleted ? 'bg-green-300' : isActive ? 'bg-yellow-300' : 'bg-gray-300'
       }`}>
