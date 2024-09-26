@@ -1,104 +1,108 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import devilSmile from './devilSmile.png'; // Add a devil smile image in your project and import it here.
 
 const islands = [
   {
     id: 1,
-    name: "Foosha Village",
+    name: 'Foosha Village',
     questions: [
       {
-        id: "foosha1",
-        question: "Who gave Luffy his straw hat?",
-        options: ["Gol D. Roger", "Shanks", "Garp", "Ace"],
-        correctAnswer: "Shanks"
+        id: 'foosha1',
+        question: 'Who gave Luffy his straw hat?',
+        options: ['Gol D. Roger', 'Shanks', 'Garp', 'Ace'],
+        correctAnswer: 'Shanks',
       },
       {
-        id: "foosha2",
-        question: "What did Luffy eat that gave him his powers?",
-        options: ["Mera Mera no Mi", "Gomu Gomu no Mi", "Hito Hito no Mi", "Yami Yami no Mi"],
-        correctAnswer: "Gomu Gomu no Mi"
-      }
-    ]
+        id: 'foosha2',
+        question: 'What did Luffy eat that gave him his powers?',
+        options: ['Mera Mera no Mi', 'Gomu Gomu no Mi', 'Hito Hito no Mi', 'Yami Yami no Mi'],
+        correctAnswer: 'Gomu Gomu no Mi',
+      },
+    ],
   },
   {
     id: 2,
-    name: "Shells Town",
+    name: 'Shells Town',
     questions: [
       {
-        id: "shells1",
-        question: "Who was the Marine captain controlling Shells Town?",
-        options: ["Morgan", "Smoker", "Hina", "Kuro"],
-        correctAnswer: "Morgan"
+        id: 'shells1',
+        question: 'Who was the Marine captain controlling Shells Town?',
+        options: ['Morgan', 'Smoker', 'Hina', 'Kuro'],
+        correctAnswer: 'Morgan',
       },
       {
-        id: "shells2",
-        question: "How long was Zoro tied up without food?",
-        options: ["3 days", "9 days", "2 weeks", "1 month"],
-        correctAnswer: "9 days"
-      }
-    ]
+        id: 'shells2',
+        question: 'How long was Zoro tied up without food?',
+        options: ['3 days', '9 days', '2 weeks', '1 month'],
+        correctAnswer: '9 days',
+      },
+    ],
   },
   {
     id: 3,
-    name: "Orange Town",
+    name: 'Orange Town',
     questions: [
       {
-        id: "orange1",
-        question: "Who was the clown pirate that Luffy fought in Orange Town?",
-        options: ["Buggy", "Alvida", "Kuro", "Don Krieg"],
-        correctAnswer: "Buggy"
+        id: 'orange1',
+        question: 'Who was the clown pirate that Luffy fought in Orange Town?',
+        options: ['Buggy', 'Alvida', 'Kuro', 'Don Krieg'],
+        correctAnswer: 'Buggy',
       },
       {
-        id: "orange2",
+        id: 'orange2',
         question: "What was the name of Nami's special attack using her staff?",
-        options: ["Thunderbolt Tempo", "Mirage Tempo", "Cyclone Tempo", "Clima-Tact"],
-        correctAnswer: "Clima-Tact"
-      }
-    ]
+        options: ['Thunderbolt Tempo', 'Mirage Tempo', 'Cyclone Tempo', 'Clima-Tact'],
+        correctAnswer: 'Clima-Tact',
+      },
+    ],
   },
   {
     id: 4,
-    name: "Syrup Village",
+    name: 'Syrup Village',
     questions: [
       {
-        id: "syrup1",
-        question: "Who joined the Straw Hat crew in Syrup Village?",
-        options: ["Nami", "Zoro", "Usopp", "Sanji"],
-        correctAnswer: "Usopp"
+        id: 'syrup1',
+        question: 'Who joined the Straw Hat crew in Syrup Village?',
+        options: ['Nami', 'Zoro', 'Usopp', 'Sanji'],
+        correctAnswer: 'Usopp',
       },
       {
-        id: "syrup2",
+        id: 'syrup2',
         question: "What was the name of Usopp's pirate crew in his village?",
-        options: ["Usopp Pirates", "Veggie Pirates", "Syrup Bandits", "Little Pirates"],
-        correctAnswer: "Usopp Pirates"
-      }
-    ]
+        options: ['Usopp Pirates', 'Veggie Pirates', 'Syrup Bandits', 'Little Pirates'],
+        correctAnswer: 'Usopp Pirates',
+      },
+    ],
   },
   {
     id: 5,
-    name: "Baratie",
+    name: 'Baratie',
     questions: [
       {
-        id: "baratie1",
-        question: "Who was the head chef at the Baratie?",
-        options: ["Sanji", "Zeff", "Patty", "Carne"],
-        correctAnswer: "Zeff"
+        id: 'baratie1',
+        question: 'Who was the head chef at the Baratie?',
+        options: ['Sanji', 'Zeff', 'Patty', 'Carne'],
+        correctAnswer: 'Zeff',
       },
       {
-        id: "baratie2",
-        question: "Which pirate attacked the Baratie?",
-        options: ["Arlong", "Buggy", "Don Krieg", "Kuro"],
-        correctAnswer: "Don Krieg"
-      }
-    ]
-  }
+        id: 'baratie2',
+        question: 'Which pirate attacked the Baratie?',
+        options: ['Arlong', 'Buggy', 'Don Krieg', 'Kuro'],
+        correctAnswer: 'Don Krieg',
+      },
+    ],
+  },
 ];
 
 const Route1 = () => {
   const [currentIsland, setCurrentIsland] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isCorrect, setIsCorrect] = useState(false);
+  const [wrongAttempts, setWrongAttempts] = useState(0);
+  const [isLocked, setIsLocked] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes countdown
 
   const handleAnswerChange = (questionId, answer) => {
     setAnswers({ ...answers, [questionId]: answer });
@@ -106,18 +110,100 @@ const Route1 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allCorrect = islands[currentIsland].questions.every(q => answers[q.id] === q.correctAnswer);
+    if (isLocked) return;
+
+    const allCorrect = islands[currentIsland].questions.every(
+      (q) => answers[q.id] === q.correctAnswer
+    );
     setIsCorrect(allCorrect);
+
     if (allCorrect && currentIsland < islands.length - 1) {
       setCurrentIsland(currentIsland + 1);
       setAnswers({});
       setIsCorrect(false);
+    } else if (!allCorrect) {
+      setWrongAttempts((prev) => prev + 1);
+      if (wrongAttempts + 1 >= 3) {
+        setIsLocked(true);
+        setTimeLeft(120); // Start the 2 minutes countdown
+      }
     }
   };
 
+  useEffect(() => {
+    if (isLocked) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setIsLocked(false);
+            setTimeLeft(120); // Reset time
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [isLocked]);
+
+  useEffect(() => {
+    let timer;
+    if (isLocked && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsLocked(false);
+      setWrongAttempts(0);
+    }
+    return () => clearInterval(timer);
+  }, [isLocked, timeLeft]);
+
+    // Security Measures
+    useEffect(() => {
+      // Disable Right-Click
+      const handleContextMenu = (e) => {
+        e.preventDefault();
+      };
+  
+      // Disable Key Combinations (F12, Ctrl+Shift+I, etc.)
+      const handleKeyDown = (e) => {
+        if (
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+          (e.ctrlKey && e.key === 'U') ||
+          (e.key === 'F5') ||
+          (e.ctrlKey && e.key === 'r') ||
+          (e.key === 'Backspace') ||
+          (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight'))
+        ) {
+          e.preventDefault();
+        }
+      };
+  
+      // Prevent Back/Forward Navigation with History API
+      history.pushState(null, null, window.location.href);
+      const handlePopState = () => {
+        history.pushState(null, null, window.location.href);
+      };
+  
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('popstate', handlePopState);
+  
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }, []);
+
   return (
     <div>
-      <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; Back to Map</Link>
+      <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">
+        &larr; Back to Map
+      </Link>
       <h2 className="text-xl mb-2">Route 1</h2>
       <div className="relative">
         <div className="absolute top-1/2 left-0  right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
@@ -129,13 +215,15 @@ const Route1 = () => {
                 index <= currentIsland ? 'opacity-100' : 'opacity-50'
               }`}
             >
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                index === currentIsland
-                  ? 'bg-yellow-300'
-                  : index < currentIsland
-                  ? 'bg-green-300'
-                  : 'bg-gray-300'
-              }`}>
+              <div
+                className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                  index === currentIsland
+                    ? 'bg-yellow-300'
+                    : index < currentIsland
+                    ? 'bg-green-300'
+                    : 'bg-gray-300'
+                }`}
+              >
                 <MapPin size={24} className="text-gray-700" />
               </div>
               <span className="text-sm mt-1">{island.name}</span>
@@ -147,10 +235,10 @@ const Route1 = () => {
         <div className="mt-8 p-4 bg-gray-100 rounded">
           <h3 className="text-lg font-semibold mb-2">{islands[currentIsland].name}</h3>
           <form onSubmit={handleSubmit}>
-            {islands[currentIsland].questions.map(q => (
+            {islands[currentIsland].questions.map((q) => (
               <div key={q.id} className="mb-4">
                 <p className="font-medium">{q.question}</p>
-                {q.options.map(option => (
+                {q.options.map((option) => (
                   <label key={option} className="block mt-2">
                     <input
                       type="radio"
@@ -167,6 +255,7 @@ const Route1 = () => {
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              disabled={isLocked}
             >
               Submit
             </button>
@@ -177,7 +266,19 @@ const Route1 = () => {
           {isCorrect && currentIsland === islands.length - 1 && (
             <p className="mt-4 text-green-500">Congratulations! You've completed Route 1!</p>
           )}
-          {!isCorrect && <p className="mt-4 text-red-500">Some answers are incorrect. Try again!</p>}
+          {!isCorrect && !isLocked && <p className="mt-4 text-red-500">Some answers are incorrect. Try again!</p>}
+        </div>
+      )}
+      {isLocked && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-white p-6 rounded shadow-lg text-center">
+            <img src={devilSmile} alt="Devil Smile" className="w-16 h-16 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-red-600">You’ve put 3 wrong inputs!</h2>
+            <p className="text-gray-700">Now wait for:</p>
+            <p className="text-2xl font-bold text-blue-500">{`${Math.floor(timeLeft / 60)}:${
+              timeLeft % 60 < 10 ? '0' : ''
+            }${timeLeft % 60}`}</p>
+          </div>
         </div>
       )}
     </div>
