@@ -12,12 +12,6 @@ const islands = [
         question: "What organization did Miss Wednesday and Mr. 9 belong to?",
         options: ["Baroque Works", "CP9", "Revolutionary Army", "Marines"],
         correctAnswer: "Baroque Works"
-      },
-      {
-        id: "whiskey2",
-        question: "Who defeated 100 bounty hunters in Whiskey Peak?",
-        options: ["Luffy", "Zoro", "Sanji", "Nami"],
-        correctAnswer: "Zoro"
       }
     ]
   },
@@ -30,12 +24,6 @@ const islands = [
         question: "What type of dinosaurs were Dorry and Brogy?",
         options: ["T-Rex", "Triceratops", "Giants", "Brachiosaurus"],
         correctAnswer: "Giants"
-      },
-      {
-        id: "garden2",
-        question: "Who got turned into a wax statue on Little Garden?",
-        options: ["Luffy", "Zoro", "Nami", "Usopp"],
-        correctAnswer: "Zoro"
       }
     ]
   },
@@ -48,12 +36,6 @@ const islands = [
         question: "Who joined the Straw Hat crew on Drum Island?",
         options: ["Robin", "Franky", "Chopper", "Brook"],
         correctAnswer: "Chopper"
-      },
-      {
-        id: "drum2",
-        question: "What was the name of the tyrannical king of Drum Island?",
-        options: ["Wapol", "Dalton", "Kureha", "Hiluluk"],
-        correctAnswer: "Wapol"
       }
     ]
   },
@@ -66,12 +48,6 @@ const islands = [
         question: "Who was the princess of Alabasta?",
         options: ["Vivi", "Rebecca", "Shirahoshi", "Hancock"],
         correctAnswer: "Vivi"
-      },
-      {
-        id: "alabasta2",
-        question: "What was Crocodile's Devil Fruit power?",
-        options: ["Sand", "Water", "Stone", "Wind"],
-        correctAnswer: "Sand"
       }
     ]
   }
@@ -81,6 +57,7 @@ const Route2 = () => {
   const [currentIsland, setCurrentIsland] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isCorrect, setIsCorrect] = useState(false);
+  const [isLocked, setIsLocked] = useState(false); // Added isLocked state
 
   const handleAnswerChange = (questionId, answer) => {
     setAnswers({ ...answers, [questionId]: answer });
@@ -99,7 +76,10 @@ const Route2 = () => {
 
   return (
     <div>
-      <h2 className="text-xl mb-2">Route 2</h2>
+      <Link to="/" className="text-blue-500 mb-4 inline-block fall-back">
+        &larr; Back to Map
+      </Link>
+      <h2 className="text-xl mb-2 font-bold">Route 2</h2>
       <div className="relative">
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
         <div className="flex justify-between text-white items-center relative z-10">
@@ -145,20 +125,21 @@ const Route2 = () => {
                 ))}
               </div>
             ))}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            <button 
+              className="custom-button" 
+              type="submit" 
+              disabled={isLocked} // Correctly references isLocked
             >
-              Submit
+              <span className="button_top">Submit</span>
             </button>
           </form>
           {isCorrect && currentIsland < islands.length - 1 && (
             <p className="mt-4 text-green-500">Correct! You can move to the next island.</p>
           )}
           {isCorrect && currentIsland === islands.length - 1 && (
-            <p className="mt-4 text-green-500">Congratulations! You've completed Route 1!</p>
+            <p className="mt-4 text-green-500">Congratulations! You've completed Route 2!</p> 
           )}
-          {!isCorrect && <p className="mt-4 text-red-500">Some answers are incorrect. Try again!</p>}
+          {!isCorrect && <p className="mt-4 text-red-500">.</p>}
         </div>
       )}
     </div>

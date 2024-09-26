@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+// import ship from '../components/ship.png';
+// import marines from '../components/marines.png';
+// import pirate from '../components/pirate.png';
+// import devilSmile from '../components/devilsmile.png';
 
 const islands = [
   {
@@ -12,12 +16,6 @@ const islands = [
         question: "What game did the Straw Hats play against Foxy's crew?",
         options: ["Davy Back Fight", "Poker", "Chess", "Capture the Flag"],
         correctAnswer: "Davy Back Fight"
-      },
-      {
-        id: "long2",
-        question: "Who was the admiral that appeared at the end of this arc?",
-        options: ["Aokiji", "Kizaru", "Akainu", "Fujitora"],
-        correctAnswer: "Aokiji"
       }
     ]
   },
@@ -30,12 +28,6 @@ const islands = [
         question: "Who was the mayor of Water 7?",
         options: ["Iceburg", "Franky", "Tom", "Paulie"],
         correctAnswer: "Iceburg"
-      },
-      {
-        id: "water2",
-        question: "What was the name of Franky's gang?",
-        options: ["Franky Family", "Water 7 Mob", "Galley-La", "Tom's Workers"],
-        correctAnswer: "Franky Family"
       }
     ]
   },
@@ -48,12 +40,6 @@ const islands = [
         question: "Who did Robin surrender herself to protect?",
         options: ["Luffy", "The Straw Hats", "Water 7", "Ohara"],
         correctAnswer: "The Straw Hats"
-      },
-      {
-        id: "enies2",
-        question: "What was Luffy's new technique to fight CP9?",
-        options: ["Gear Second", "Gear Third", "Gear Fourth", "Haki"],
-        correctAnswer: "Gear Second"
       }
     ]
   },
@@ -66,12 +52,18 @@ const islands = [
         question: "Who joined the Straw Hat crew after Enies Lobby?",
         options: ["Robin", "Franky", "Brook", "Jinbe"],
         correctAnswer: "Franky"
-      },
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Water 7",
+    questions: [
       {
-        id: "post2",
-        question: "What happened to the Going Merry?",
-        options: ["It was sold", "It was stolen", "It was given a Viking funeral", "It was repaired"],
-        correctAnswer: "It was given a Viking funeral"
+        id: "water1",
+        question: "Who was the mayor of Water 7?",
+        options: ["Iceburg", "Franky", "Tom", "Paulie"],
+        correctAnswer: "Iceburg"
       }
     ]
   }
@@ -99,11 +91,11 @@ const Route4 = () => {
 
   return (
     <div>
-      <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; Back to Map</Link>
-      <h2 className="text-xl mb-2">Route 4</h2>
+      <Link to="/" className="text-blue-500 mb-4 inline-block fall-back">&larr; Back to Map</Link>
+      <h2 className="text-xl mb-2 font-bold">Route 4</h2>
       <div className="relative">
-        <div className="absolute bg  top-1/2 left-0 right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
-        <div className="flex justify-between text-white   items-center relative z-10">
+        <div className="absolute top-1/2 left-0 right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
+        <div className="flex justify-between text-white items-center relative z-10">
           {islands.map((island, index) => (
             <div
               key={island.id}
@@ -146,20 +138,20 @@ const Route4 = () => {
                 ))}
               </div>
             ))}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Submit
+            <button className="custom-button" 
+            type="submit">
+              <span className="button_top">Submit</span>
             </button>
           </form>
           {isCorrect && currentIsland < islands.length - 1 && (
             <p className="mt-4 text-green-500">Correct! You can move to the next island.</p>
           )}
           {isCorrect && currentIsland === islands.length - 1 && (
-            <p className="mt-4 text-green-500">Congratulations! You've completed Route 1!</p>
+            <p className="mt-4 text-green-500">Congratulations! You've completed Route 4!</p>
           )}
-          {!isCorrect && <p className="mt-4 text-red-500">Some answers are incorrect. Try again!</p>}
+          {!isCorrect && currentIsland < islands.length && (
+            <p className="mt-4 text-red-500"></p>
+          )}
         </div>
       )}
     </div>

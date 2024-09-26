@@ -11,5 +11,5 @@ Currently, two official plugins are available:
 ## Technical Team
 
 - Atharv Patil
-- Soham Mharte
+- Soham Mhatre
 - Aman Singh

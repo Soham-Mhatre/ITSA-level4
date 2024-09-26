@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import devilSmile from './devilSmile.png'; // Add a devil smile image in your project and import it here.
+import devilSmile from '../components/devilsmile.png'; 
+// import ship from '../components/ship.png';
+// import marines from '../components/marines.png';
+// import pirate from '../components/pirate.png';
 
 const islands = [
   {
@@ -13,13 +16,7 @@ const islands = [
         question: 'Who gave Luffy his straw hat?',
         options: ['Gol D. Roger', 'Shanks', 'Garp', 'Ace'],
         correctAnswer: 'Shanks',
-      },
-      {
-        id: 'foosha2',
-        question: 'What did Luffy eat that gave him his powers?',
-        options: ['Mera Mera no Mi', 'Gomu Gomu no Mi', 'Hito Hito no Mi', 'Yami Yami no Mi'],
-        correctAnswer: 'Gomu Gomu no Mi',
-      },
+      }
     ],
   },
   {
@@ -31,13 +28,7 @@ const islands = [
         question: 'Who was the Marine captain controlling Shells Town?',
         options: ['Morgan', 'Smoker', 'Hina', 'Kuro'],
         correctAnswer: 'Morgan',
-      },
-      {
-        id: 'shells2',
-        question: 'How long was Zoro tied up without food?',
-        options: ['3 days', '9 days', '2 weeks', '1 month'],
-        correctAnswer: '9 days',
-      },
+      }
     ],
   },
   {
@@ -49,13 +40,7 @@ const islands = [
         question: 'Who was the clown pirate that Luffy fought in Orange Town?',
         options: ['Buggy', 'Alvida', 'Kuro', 'Don Krieg'],
         correctAnswer: 'Buggy',
-      },
-      {
-        id: 'orange2',
-        question: "What was the name of Nami's special attack using her staff?",
-        options: ['Thunderbolt Tempo', 'Mirage Tempo', 'Cyclone Tempo', 'Clima-Tact'],
-        correctAnswer: 'Clima-Tact',
-      },
+      }
     ],
   },
   {
@@ -67,13 +52,7 @@ const islands = [
         question: 'Who joined the Straw Hat crew in Syrup Village?',
         options: ['Nami', 'Zoro', 'Usopp', 'Sanji'],
         correctAnswer: 'Usopp',
-      },
-      {
-        id: 'syrup2',
-        question: "What was the name of Usopp's pirate crew in his village?",
-        options: ['Usopp Pirates', 'Veggie Pirates', 'Syrup Bandits', 'Little Pirates'],
-        correctAnswer: 'Usopp Pirates',
-      },
+      }
     ],
   },
   {
@@ -85,13 +64,7 @@ const islands = [
         question: 'Who was the head chef at the Baratie?',
         options: ['Sanji', 'Zeff', 'Patty', 'Carne'],
         correctAnswer: 'Zeff',
-      },
-      {
-        id: 'baratie2',
-        question: 'Which pirate attacked the Baratie?',
-        options: ['Arlong', 'Buggy', 'Don Krieg', 'Kuro'],
-        correctAnswer: 'Don Krieg',
-      },
+      }
     ],
   },
 ];
@@ -160,51 +133,54 @@ const Route1 = () => {
     return () => clearInterval(timer);
   }, [isLocked, timeLeft]);
 
+// isko at the end pura code hone pr uncomment krna hai
+
+
     // Security Measures
-    useEffect(() => {
-      // Disable Right-Click
-      const handleContextMenu = (e) => {
-        e.preventDefault();
-      };
+    // useEffect(() => {
+    //   // Disable Right-Click
+    //   const handleContextMenu = (e) => {
+    //     e.preventDefault();
+    //   };
   
-      // Disable Key Combinations (F12, Ctrl+Shift+I, etc.)
-      const handleKeyDown = (e) => {
-        if (
-          e.key === 'F12' ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-          (e.ctrlKey && e.key === 'U') ||
-          (e.key === 'F5') ||
-          (e.ctrlKey && e.key === 'r') ||
-          (e.key === 'Backspace') ||
-          (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight'))
-        ) {
-          e.preventDefault();
-        }
-      };
+    //   // Disable Key Combinations (F12, Ctrl+Shift+I, etc.)
+    //   const handleKeyDown = (e) => {
+    //     if (
+    //       e.key === 'F12' ||
+    //       (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+    //       (e.ctrlKey && e.key === 'U') ||
+    //       (e.key === 'F5') ||
+    //       (e.ctrlKey && e.key === 'r') ||
+    //       (e.key === 'Backspace') ||
+    //       (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight'))
+    //     ) {
+    //       e.preventDefault();
+    //     }
+    //   };
   
-      // Prevent Back/Forward Navigation with History API
-      history.pushState(null, null, window.location.href);
-      const handlePopState = () => {
-        history.pushState(null, null, window.location.href);
-      };
+    //   // Prevent Back/Forward Navigation with History API
+    //   history.pushState(null, null, window.location.href);
+    //   const handlePopState = () => {
+    //     history.pushState(null, null, window.location.href);
+    //   };
   
-      document.addEventListener('contextmenu', handleContextMenu);
-      document.addEventListener('keydown', handleKeyDown);
-      window.addEventListener('popstate', handlePopState);
+    //   document.addEventListener('contextmenu', handleContextMenu);
+    //   document.addEventListener('keydown', handleKeyDown);
+    //   window.addEventListener('popstate', handlePopState);
   
-      return () => {
-        document.removeEventListener('contextmenu', handleContextMenu);
-        document.removeEventListener('keydown', handleKeyDown);
-        window.removeEventListener('popstate', handlePopState);
-      };
-    }, []);
+    //   return () => {
+    //     document.removeEventListener('contextmenu', handleContextMenu);
+    //     document.removeEventListener('keydown', handleKeyDown);
+    //     window.removeEventListener('popstate', handlePopState);
+    //   };
+    // }, []);
 
   return (
     <div>
-      <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">
+      <Link to="/" className="text-blue-500 mb-4 inline-block fall-back">
         &larr; Back to Map
       </Link>
-      <h2 className="text-xl mb-2">Route 1</h2>
+      <h2 className="text-xl mb-2 font-bold text-4c5eba rotating-text">Route 1</h2>
       <div className="relative">
         <div className="absolute top-1/2 left-0  right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
         <div className="flex justify-between text-white items-center relative z-10">
@@ -252,13 +228,12 @@ const Route1 = () => {
                 ))}
               </div>
             ))}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              disabled={isLocked}
-            >
-              Submit
-            </button>
+            <button className="custom-button" 
+            type="submit"
+            disabled={isLocked}
+             >
+      <span className="button_top">Submit</span>
+    </button>
           </form>
           {isCorrect && currentIsland < islands.length - 1 && (
             <p className="mt-4 text-green-500">Correct! You can move to the next island.</p>
@@ -266,13 +241,13 @@ const Route1 = () => {
           {isCorrect && currentIsland === islands.length - 1 && (
             <p className="mt-4 text-green-500">Congratulations! You've completed Route 1!</p>
           )}
-          {!isCorrect && !isLocked && <p className="mt-4 text-red-500">Some answers are incorrect. Try again!</p>}
+          {!isCorrect && !isLocked && <p className="mt-4 text-red-500"></p>}
         </div>
       )}
       {isLocked && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
           <div className="bg-white p-6 rounded shadow-lg text-center">
-            <img src={devilSmile} alt="Devil Smile" className="w-16 h-16 mx-auto mb-4" />
+            <img src={devilSmile} alt="Devil Smile" className="w-25 h-27 mx-auto mb-4" />
             <h2 className="text-xl font-bold text-red-600">You’ve put 3 wrong inputs!</h2>
             <p className="text-gray-700">Now wait for:</p>
             <p className="text-2xl font-bold text-blue-500">{`${Math.floor(timeLeft / 60)}:${
