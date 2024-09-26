@@ -118,7 +118,7 @@ const Route1 = () => {
   return (
     <div>
       <Link to="/" className="text-blue-500 hover:underline mb-4 inline-block">&larr; Back to Map</Link>
-      <h2 className="text-xl mb-2">Route 1</h2>
+      <h2 className="text-xl text-white mb-2">Route 1</h2>
       <div className="relative">
         <div className="absolute top-1/2 left-0  right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
         <div className="flex justify-between text-white items-center relative z-10">
