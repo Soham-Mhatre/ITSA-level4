@@ -155,3 +155,18 @@ main {
 .custom-button:active .button_top {
   transform: translateY(0);
 }
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.overflow-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.overflow-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Ensuring that overflow can still scroll */
+.overflow-hidden {
+  overflow-y: auto; /* Enable vertical scroll if needed */
+}

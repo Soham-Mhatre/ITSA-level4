@@ -13,9 +13,9 @@ const islands = [
     questions: [
       {
         id: 'foosha1',
-        question: 'Who gave Luffy his straw hat?',
-        options: ['Gol D. Roger', 'Shanks', 'Garp', 'Ace'],
-        correctAnswer: 'Shanks',
+        question: 'Which historic mosque in Delhi, renowned for its architectural splendor and capacity, stands as a symbol of Mughal culture and has witnessed many significant events?',
+        options: ['The Majestic Jama Masjid', 'The Grand Red Fort', 'The Timeless Humayun\'s Tomb', 'The Historic Qutub Minar'],
+        correctAnswer: 'The Majestic Jama Masjid',
       }
     ],
   },
@@ -25,9 +25,9 @@ const islands = [
     questions: [
       {
         id: 'shells1',
-        question: 'Who was the Marine captain controlling Shells Town?',
-        options: ['Morgan', 'Smoker', 'Hina', 'Kuro'],
-        correctAnswer: 'Morgan',
+        question: 'In the context of Delhi\'s cultural landscape, which market is famous for its street food and has roots dating back to the Mughal era?',
+        options: ['The Grand Connaught Place', 'The Historic Chandni Chowk', 'The Vibrant Dilli Haat', 'The Bustling Sarojini Nagar Market'],
+        correctAnswer: 'The Historic Chandni Chowk',
       }
     ],
   },
@@ -37,9 +37,9 @@ const islands = [
     questions: [
       {
         id: 'orange1',
-        question: 'Who was the clown pirate that Luffy fought in Orange Town?',
-        options: ['Buggy', 'Alvida', 'Kuro', 'Don Krieg'],
-        correctAnswer: 'Buggy',
+        question: 'In computer science, which data structure allows elements to be added or removed only from one end, resembling a stack of books?',
+        options: ['The Circular Queue', 'The Stack', 'The Linked List', 'The Priority Queue'],
+        correctAnswer: 'The Stack',
       }
     ],
   },
@@ -49,24 +49,13 @@ const islands = [
     questions: [
       {
         id: 'syrup1',
-        question: 'Who joined the Straw Hat crew in Syrup Village?',
-        options: ['Nami', 'Zoro', 'Usopp', 'Sanji'],
-        correctAnswer: 'Usopp',
+        question: 'If HTML is the skeleton of a webpage, which technology serves as its dynamic muscle, allowing interaction?',
+        options: ['CSS', 'JavaScript', 'PHP', 'XML'],
+        correctAnswer: 'JavaScript',
       }
     ],
   },
-  {
-    id: 5,
-    name: 'Baratie',
-    questions: [
-      {
-        id: 'baratie1',
-        question: 'Who was the head chef at the Baratie?',
-        options: ['Sanji', 'Zeff', 'Patty', 'Carne'],
-        correctAnswer: 'Zeff',
-      }
-    ],
-  },
+  
 ];
 
 const Route1 = () => {

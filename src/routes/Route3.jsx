@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
-// import ship from '../components/ship.png';
-// import marines from '../components/marines.png';
-// import pirate from '../components/pirate.png';
-// import devilSmile from '../components/devilsmile.png';
+import devilSmile from '../components/devilsmile.png'; // Add your image here
 
 const islands = [
   {
@@ -13,9 +10,9 @@ const islands = [
     questions: [
       {
         id: "jaya1",
-        question: "Who did Luffy and Zoro meet in the bar in Mock Town?",
-        options: ["Blackbeard", "Whitebeard", "Shanks", "Kaido"],
-        correctAnswer: "Blackbeard"
+        question: 'Which grand structure in Kolkata, built in memory of Queen Victoria, is surrounded by beautiful gardens and is a popular tourist attraction?',
+        options: ['Howrah Bridge', 'Victoria Memorial', 'Marble Palace', 'Dakshineswar Kali Temple'],
+        correctAnswer: 'Victoria Memorial',
       }
     ]
   },
@@ -25,9 +22,9 @@ const islands = [
     questions: [
       {
         id: "skypiea1",
-        question: "Who was the 'God' of Skypiea?",
-        options: ["Gan Fall", "Wyper", "Enel", "Conis"],
-        correctAnswer: "Enel"
+        question: 'What is the name of the famous sweet treat originating from Kolkata, made from paneer and soaked in syrup?',
+        options: ['Gulab Jamun', 'Rasgulla', 'Sandesh', 'Mishti Doi'],
+        correctAnswer: 'Rasgulla',
       }
     ]
   },
@@ -37,9 +34,9 @@ const islands = [
     questions: [
       {
         id: "upper1",
-        question: "What was the name of the giant snake in Upper Yard?",
-        options: ["Nola", "Kashigami", "Jormungandr", "Orochi"],
-        correctAnswer: "Nola"
+        question: 'In programming, what is the concept called where a function can call itself to solve a problem?',
+        options: ['Recursion', 'Iteration', 'Compilation', 'Inheritance'],
+        correctAnswer: 'Recursion',
       }
     ]
   },
@@ -49,9 +46,9 @@ const islands = [
     questions: [
       {
         id: "angel1",
-        question: "What animal could Pierre, Gan Fall's steed, transform into?",
-        options: ["Eagle", "Horse", "Pegasus", "Dragon"],
-        correctAnswer: "Pegasus"
+        question: 'Which protocol is used for secure data transmission over the Internet?',
+        options: ['HTTP', 'FTP', 'HTTPS', 'SMTP'],
+        correctAnswer: 'HTTPS',
       }
     ]
   }
@@ -63,25 +60,58 @@ const Route3 = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [wrongAttempts, setWrongAttempts] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes countdown
+  const [timeLeft, setTimeLeft] = useState(180); // 3 minutes countdown
+
   const handleAnswerChange = (questionId, answer) => {
     setAnswers({ ...answers, [questionId]: answer });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allCorrect = islands[currentIsland].questions.every(q => answers[q.id] === q.correctAnswer);
+    if (isLocked) return;
+
+    const allCorrect = islands[currentIsland].questions.every(
+      q => answers[q.id] === q.correctAnswer
+    );
     setIsCorrect(allCorrect);
+
     if (allCorrect && currentIsland < islands.length - 1) {
       setCurrentIsland(currentIsland + 1);
       setAnswers({});
       setIsCorrect(false);
+    } else if (!allCorrect) {
+      setWrongAttempts(prev => prev + 1);
+      if (wrongAttempts + 1 >= 3) {
+        setIsLocked(true);
+        setTimeLeft(180); // Start the 3 minutes countdown
+      }
     }
   };
 
+  useEffect(() => {
+    let timer;
+    if (isLocked) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setIsLocked(false);
+            setWrongAttempts(0);
+            setTimeLeft(180); // Reset time
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isLocked]);
+
   return (
-    <div>
-      <Link to="/" className="text-blue-500  mb-4 inline-block fall-back">&larr; Back to Map</Link>
+    <div className="overflow-hidden h-screen">
+    <Link to="/" className="text-blue-500 mb-4 inline-block fall-back">
+      &larr; Back to Map
+      </Link>
       <h2 className="text-xl mb-2 font-bold">Route 3</h2>
       <div className="relative">
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-blue-300 transform -translate-y-1/2"></div>
@@ -128,20 +158,27 @@ const Route3 = () => {
                 ))}
               </div>
             ))}
-            <button className="custom-button" 
-            type="submit"
-            disabled={isLocked}
-             >
-      <span className="button_top">Submit</span>
-    </button>
+            <button className="custom-button" type="submit" disabled={isLocked}>
+              <span className="button_top">Submit</span>
+            </button>
           </form>
           {isCorrect && currentIsland < islands.length - 1 && (
             <p className="mt-4 text-green-500">Correct! You can move to the next island.</p>
           )}
           {isCorrect && currentIsland === islands.length - 1 && (
-            <p className="mt-4 text-green-500">Congratulations! You've completed Route 1!</p>
+            <p className="mt-4 text-green-500">Congratulations! You've completed Route 3!</p>
           )}
-          {!isCorrect && <p className="mt-4 text-red-500"></p>}
+          {!isCorrect && !isLocked && <p className="mt-4 text-red-500"></p>}
+        </div>
+      )}
+      {isLocked && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-white p-6 rounded shadow-lg text-center">
+            <img src={devilSmile} alt="Devil Smile" className="w-25 h-27 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-red-600">You’ve put 3 wrong inputs!</h2>
+            <p className="text-gray-700">Now wait for:</p>
+            <p className="text-2xl font-bold text-blue-500">{`${Math.floor(timeLeft / 60)}:${timeLeft % 60 < 10 ? '0' : ''}${timeLeft % 60}`}</p>
+          </div>
         </div>
       )}
     </div>
